@@ -1,9 +1,5 @@
 package com.example.backend.entity;
 
-import java.util.Collection;
-import java.util.Date;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,37 +11,24 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Table(name = "room_private")
+@Table(name = "room_detail")
 @Entity
-public class RoomPrivate {
+public class RoomDetail {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
 	private Long id;
 	
-	@Column(name = "create_by")
-	private Long idCreator;
+	@Column(name = "room_id")
+	private Long roomID;
 	
-	@Column(name = "name")
-	private String name;
-	
-	@Column(name = "avt", columnDefinition = "LONGBLOB")
-	private byte[] avt;
-	
-	@Column(name = "createDate")
-	private Date createDate;
-	
-	@OneToMany(mappedBy = "roomPrivate", cascade = CascadeType.ALL)
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private Collection<ChatPrivate> listChat;
-	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User userID;
 }

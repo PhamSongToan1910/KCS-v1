@@ -3,7 +3,7 @@ import ContactList from "../components/Chat/contactList/ContactList";
 import "./css/LiveChat.scss";
 import { Box, Grid, Paper, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/slices/UserSlice";
+// import { fetchUsers } from "../redux/slices/UserSlice";
 import WindowChat from "../components/Chat/WindowChat/WindowChat";
 import InfoPanel from "../components/Chat/InfoPanel/InfoPanel";
 import Stomp from "stompjs";
@@ -11,6 +11,9 @@ import SockJS from 'sockjs-client';
 import { getRoomByUser } from "../services/RoomPrivateService";
 import axiosInstance from "../api";
 import { fetchAllFileByRoom } from "../redux/slices/ResourceSlice";
+import { fetchUserById } from "../services/userService";
+// import { fetchUserById } from "../../../services/userService";
+
 
 
 const Item = styled(Paper)(({ theme, selectedInfo }) => ({
@@ -29,18 +32,30 @@ const LiveChat = () => {
   const [selectedChat, setSelectedChat] = useState('');
 
   const [selectedInfo, setSelectedInfo] = useState(false);
-  const { data, loading, searchData } = useSelector((state) => state.users);
+  const { data, loading, searchData } = useSelector((state) => state.roomPrivate.getRoomByUser);
   const [roomId, setRoomId] = useState('');
-  const stompClientRef = useRef(null);
+  // const stompClientRef = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    const fetchRoomData = async () => {
+      const id = localStorage.getItem('id');
+      await getRoomByUser(id, dispatch);
+      // Now data should be updated with the fetched room data
+      console.log(data);
+    };
+  
+    fetchRoomData();
+  }, []);
+  
 
+
+  // console.log(data);
 
   const filteredList = () => {
-    if (!data) return [];
+    if (!data) {
+      return [];
+    }
 
     let filteredData = data;
 
@@ -65,12 +80,6 @@ const LiveChat = () => {
     return unsubscribe;
   }, [stompClient]);
 
-  const fetchRoom = async (id1, id2) => {
-    const roomId = await getRoomByUser(id1, id2);
-    setRoomId(roomId);
-    return roomId;
-  };
-
   const getChatbyRoom = async (roomId) => {
     const response = await axiosInstance.get(`http://localhost:8081/api/v1/message/${roomId}`);
     setMessages(response.data);
@@ -93,13 +102,11 @@ const LiveChat = () => {
     };
   };
 
-  const handleChatSelect = async (userId) => {
-    const userId1 = localStorage.getItem('id');
-    const room = await fetchRoom(userId1, userId);
-    await getChatbyRoom(room);
-    const unsubscribe = subscribe(room);
-    setSelectedChat(userId);
-
+  const handleChatSelect = async (room) => {
+    await getChatbyRoom(room.id);
+    const unsubscribe = subscribe(room.id);
+    setSelectedChat(room.name.split(",")[0]);
+    setRoomId(room.id);
     return () => {
       unsubscribe();
     };

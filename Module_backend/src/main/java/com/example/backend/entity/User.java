@@ -53,7 +53,6 @@ public class User {
 	private String MaTK;
 	
 	@Column(name = "avt", columnDefinition = "LONGBLOB")
-
 	private byte[] avt;
 	
 	@ManyToOne
@@ -84,5 +83,5 @@ public class User {
 	@OneToMany(mappedBy = "userID", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	private Collection<Room> listRooms;
+	private Collection<RoomDetail> listRoomsDetail;
 }

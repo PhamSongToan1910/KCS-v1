@@ -14,10 +14,12 @@ import com.example.backend.DTO.ResourcesDTO;
 import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.entity.Resources;
+import com.example.backend.entity.RoomDetail;
 import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
 import com.example.backend.exception.UserException;
 import com.example.backend.repository.ResourcesRepository;
+import com.example.backend.repository.RoomDetailRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.ResourcesService;
 import com.example.backend.service.RoomPrivateService;
@@ -33,15 +35,18 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
-	private ResourcesRepository  resourcesRepository;
-	
+	private ResourcesRepository resourcesRepository;
+
 	@Autowired
 	private RoomPrivateRepository roomPrivateRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoomDetailRepository roomDetailRepository;
 
 	@Override
 	public List<UserDTO> getAll() {
@@ -86,7 +91,6 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("Email hoặc SĐT đã tồn tại");
 		}
 	}
-	
 
 	@Override
 	public UserDTO update(Long id, UserDTO userDTO) {
@@ -99,7 +103,8 @@ public class UserServiceImpl implements UserService {
 				Date date = new Date();
 				User userSaved = this.modelMapper.map(userDTO, User.class);
 				userSaved.setId(id);
-				userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));;
+				userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));
+				;
 				userSaved.setUpdateDate(date);
 				this.userRepository.save(userSaved);
 				return userDTO;
@@ -173,19 +178,41 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public void generateRoom(User user)
-	{
+	public void generateRoom(User user) {
 		List<User> list = userRepository.findAll();
-		
-		for(User u : list)
-		{
-			RoomPrivate room= new RoomPrivate();
-			room.setUser1ID(user.getId());
-			room.setUser2ID(u.getId());
-			room.setCreateDate(new Date());
-			this.roomPrivateRepository.save(room);}
+		for (User u : list) {
+			if(u.getId() == user.getId()) {
+				RoomPrivate room = new RoomPrivate();
+				room.setIdCreator(user.getId());
+				room.setCreateDate(new Date());
+				room.setName(user.getId() + "," + user.getName() + "-"+ u.getId() + "," + u.getName());
+//				room.setAvt(u.getAvt());
+				RoomPrivate roomSaved = this.roomPrivateRepository.save(room);
+				RoomDetail roomDetail = new RoomDetail();
+				roomDetail.setRoomID(roomSaved.getId());
+				roomDetail.setUserID(user);
+				RoomDetail roomDetail_1 = new RoomDetail();
+				roomDetail_1.setRoomID(roomSaved.getId());
+				this.roomDetailRepository.save(roomDetail);
+			}else {
+				RoomPrivate room = new RoomPrivate();
+				room.setIdCreator(user.getId());
+				room.setCreateDate(new Date());
+				room.setName(user.getId() + "," + user.getName() + "-"+ u.getId() + "," + u.getName());
+//				room.setAvt(u.getAvt());
+				RoomPrivate roomSaved = this.roomPrivateRepository.save(room);
+				RoomDetail roomDetail = new RoomDetail();
+				roomDetail.setRoomID(roomSaved.getId());
+				roomDetail.setUserID(user);
+				RoomDetail roomDetail_1 = new RoomDetail();
+				roomDetail_1.setRoomID(roomSaved.getId());
+				roomDetail_1.setUserID(u);
+				this.roomDetailRepository.save(roomDetail);
+				this.roomDetailRepository.save(roomDetail_1);
+			}
+		}
 	}
-	
+
 	public UserDTO updateAvt(Long id) {
 		Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 		Optional<User> user = this.userRepository.findById(id);
@@ -195,5 +222,3 @@ public class UserServiceImpl implements UserService {
 		return userDTO;
 	}
 }
-	
-

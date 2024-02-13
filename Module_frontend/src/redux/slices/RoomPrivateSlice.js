@@ -1,32 +1,36 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import * as roomPrivateService from '../../services/RoomPrivateService';
 
-export const getRoomByUser = createAsyncThunk("roomPrivate/getRoomByUser", async (id1, id2) => {
-    return roomPrivateService.getRoomByUser(id1, id2);
-  });
-
 const RoomPrivateSlice = createSlice({
-    name: "roomPrivate",
-    initialState: {
-      roomId: '',
+  name: "roomPrivate",
+  initialState: {
+    getRoomByUser: {
+      data: [],
       loading: false,
       error: null,
+      searchData: [],
+    }
+  },
+  reducers: {
+    getRoomByUserStart: (state) => {
+      state.getRoomByUser.loading = true;
     },
-    reducers: {
-    
+    getRoomByUserSuccess: (state, action) => {
+      state.getRoomByUser.loading = false;
+      state.getRoomByUser.data = action.payload;
+      state.getRoomByUser.error = false
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(getRoomByUser.fulfilled, (state, action) => {
-          state.loading = false;
-          state.roomId = action.payload;
-        })
-        .addCase(getRoomByUser.rejected, (state, action) => {
-          state.loading = true;
-          state.error = action.error.message;
-        })
-        
-    },
-  });
-  
-  export default RoomPrivateSlice.reducer;
+    getRoomByUserError: (state) => {
+      state.getRoomByUser.loading = false;
+      state.getRoomByUser.error = true;
+    }
+  },
+});
+
+export const {
+  getRoomByUserError,
+  getRoomByUserSuccess,
+  getRoomByUserStart
+} = RoomPrivateSlice.actions;
+
+export default RoomPrivateSlice.reducer;

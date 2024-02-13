@@ -5,6 +5,10 @@ import java.util.Date;
 import com.example.backend.entity.Student;
 import com.example.backend.entity.User;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +19,14 @@ import lombok.NoArgsConstructor;
 public class RoomPrivateDTO {
 
 	private Long id;
-
-	private Long user1ID;
-
-	private Long user2ID;
-
+	
+	private Long idCreator;
+	
+	private String name;
+	
+//	@Column(name = "avt", columnDefinition = "LONGBLOB")
+	private byte[] avt;
+	
 	private Date createDate;
-
-	private Boolean status;
 
 }

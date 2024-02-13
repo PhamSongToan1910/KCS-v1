@@ -41,8 +41,9 @@ public class LoginController {
 		if (authentication.isAuthenticated()) {
 			String token = JwtUtils.generateToken(loginRequest.getUsername());
 			Long id = userService.getByEmail(loginRequest.getUsername()).getId();
-			
+	
 			AuthResponse authRes = new AuthResponse(token, id);
+			System.out.println(token + " Happy new year!!!");
 			return new ResponseEntity<>(authRes, HttpStatus.OK);
 		}
 		return null;

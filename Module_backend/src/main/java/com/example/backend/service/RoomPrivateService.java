@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ import com.example.backend.entity.RoomPrivate;
 
 public interface RoomPrivateService {
 
-	List<RoomPrivateDTO> getByUser1ID(Long id);
+	List<RoomPrivateDTO> getByUserID(Long id);
 	
 	RoomPrivateDTO create(RoomPrivateDTO roomPrivateDTO);
 	
@@ -18,4 +19,5 @@ public interface RoomPrivateService {
 	
 	RoomPrivateDTO getByID(Long id);
 	
+//	HashMap<Long, String> getContactList(Long id);
 }

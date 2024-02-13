@@ -1,15 +1,16 @@
-
 import axiosInstance from "../api";
+import { getRoomByUserStart, getRoomByUserSuccess, getRoomByUserError } from "../redux/slices/RoomPrivateSlice";
 
 const API_URL = "http://localhost:8081/api/v1/room-private"
-export const getRoomByUser = async (id1, id2) => {
+export const getRoomByUser = async (id, dispatch) => {
+    dispatch(getRoomByUserStart())
+    console.log(id);
     try {
-        const response = await axiosInstance.get(`${API_URL}/${id1}/${id2}`)
-        console.log("check data:", response.data.id)
-        return response.data.id;
+        const response = await axiosInstance.get(`${API_URL}/${id}`)
+        console.log("check data:", response.data)
+        dispatch(getRoomByUserSuccess(response.data));
     } catch (error) {
         console.error(`Error fetching user with I:`, error);
-        throw error;
-
+        dispatch(getRoomByUserError())
     }
 }
