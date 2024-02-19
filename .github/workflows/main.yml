@@ -1,0 +1,4 @@
+name: Deloy to EC2
+
+on: 
+  push: 
