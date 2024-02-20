@@ -1,4 +1,4 @@
-name: Deloy to EC2
+name: Deploy back-end to EC2
 
 on: 
   push: 
@@ -13,5 +13,14 @@ env:
   EC2_HOST: ${{ secret.EC2_HOST }}
   EC2_USERNAME: $${{secrets.EC2_USERNAME }}
   EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+
+jobs:
+  deploy: 
+    runs-on: ubuntu-lastest
+
+    steps: 
+      -name: Checkout code
+       uses: actions/checkout@v2
+      - 
 
 
