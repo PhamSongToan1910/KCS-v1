@@ -8,7 +8,7 @@ on:
      - 'Module_backend/**'
 
 env:
-  JAR_FILE_NAME: 'KCS_v1SNAPSHOT2.jar'
+  JAR_FILE_NAME: 'kcs_v1SNAPSHOT2.jar'
   TARGET_PATH: 'Module_backend'
   EC2_HOST: ${{ secrets.EC2_HOST }}
   EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
