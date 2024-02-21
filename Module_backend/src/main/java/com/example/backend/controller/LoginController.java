@@ -43,7 +43,7 @@ public class LoginController {
 			Long id = userService.getByEmail(loginRequest.getUsername()).getId();
 	
 			AuthResponse authRes = new AuthResponse(token, id);
-			System.out.println(token + " Happy new year!!!");
+//			System.out.println(token + " Happy new year!!!");
 			return new ResponseEntity<>(authRes, HttpStatus.OK);
 		}
 		return null;
