@@ -1,0 +1,51 @@
+name: Deploy FE to EC2
+
+on:
+  push:
+    branches:
+      - main
+    paths: 
+     - 'Module_frontend/**'
+
+env:
+  TARGET_PATH: 'Module_frontend'
+  SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+  SSH_USERNAME: ${{ secrets.EC2_USERNAME }}
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.17.1'
+        
+    - name: Install dependencies and build project
+      run: |
+        cd ${{ env.TARGET_PATH }}
+        npm install
+        npm run build
+        
+    - name: Copy files to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.SSH_USERNAME }}
+        key: ${{ env.SSH_PRIVATE_KEY }}
+        source: '${{ env.TARGET_PATH }}/dist/**'
+        target: /var/www/kcsonline.top/html
+
+    - name: Restart Nginx
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.SSH_USERNAME }}
+        key: ${{ env.SSH_PRIVATE_KEY }}
+        script: |
+          sudo systemctl restart nginx
