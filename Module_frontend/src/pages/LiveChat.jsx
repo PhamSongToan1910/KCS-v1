@@ -136,7 +136,7 @@ const LiveChat = () => {
             </div>
           ):
           (<div className="window-chat-logo">
-            <i style={{fontSize :"100px"}} class='bx bxl-messenger bx-tada bx-flip-horizontal' ></i>
+            <i style={{fontSize :"100px"}} className='bx bxl-messenger bx-tada bx-flip-horizontal' ></i>
             <p style={{fontSize :"25px", color:"#000"}}>Tin nhắn của bạn</p>
             </div>)}
         </div>
