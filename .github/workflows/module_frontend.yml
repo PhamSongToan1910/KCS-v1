@@ -38,7 +38,7 @@ jobs:
         host: ${{ env.EC2_HOST }}
         username: ${{ env.SSH_USERNAME }}
         key: ${{ env.SSH_PRIVATE_KEY }}
-        source: '${{ env.TARGET_PATH }}'
+        source: '${{ env.TARGET_PATH }}/src/**'
         target: /var/www/kcsonline.top/html
 
     - name: Restart Nginx
