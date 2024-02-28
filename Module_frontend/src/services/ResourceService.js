@@ -13,6 +13,8 @@ export const getAllFile = async () => {
     }
 };
 
+//akjfldk
+
 export const getAllFileByRoom= async (id) => {
     try {
         const response = await axiosInstance.get(`${API_URL}/get-by-room-private/${id}`)
