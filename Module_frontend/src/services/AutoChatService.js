@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosInstance from "../api";
 
-const API_URL = "http://localhost:8081/api/v1/auto-chat";
+const API_URL = "https://kcsonline.top/api/v1/auto-chat";
 
 const token = localStorage.getItem('token')
 export const getAllChat = async () => {

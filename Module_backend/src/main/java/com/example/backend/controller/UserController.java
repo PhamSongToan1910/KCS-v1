@@ -25,7 +25,7 @@ import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {

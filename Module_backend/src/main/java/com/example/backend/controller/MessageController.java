@@ -18,7 +18,7 @@ import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.service.ChatPrivateService;
 import com.example.backend.service.RoomPrivateService;
 
-@CrossOrigin(origins =  "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/message")
 public class MessageController {

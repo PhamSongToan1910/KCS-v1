@@ -17,7 +17,7 @@ import com.example.backend.DTO.AutoChatDTO;
 import com.example.backend.service.AutoChatService;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 
 @RequestMapping("/api/v1/auto-chat")
 

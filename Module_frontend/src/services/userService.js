@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosInstance from "../api";
 
-const API_URL = "http://localhost:8081/api/v1/user";
+const API_URL = "https://kcsonline.top/api/v1/user";
 
 
 export const fetchUserById = async (userId) => {

@@ -21,7 +21,7 @@ import com.example.backend.entity.User;
 import com.example.backend.service.UserService;
 import com.example.backend.utils.JwtUtils;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/auth")
 public class LoginController {

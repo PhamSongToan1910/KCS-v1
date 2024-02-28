@@ -1,6 +1,6 @@
 import axiosInstance from "../api";
 
-const API_URL = "http://localhost:8081/api/v1/sendEmail"
+const API_URL = "https://kcsonline.top/api/v1/sendEmail"
 
 export const createVerificationCode = async (email) => {
     try {

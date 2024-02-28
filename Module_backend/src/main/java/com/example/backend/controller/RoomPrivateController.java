@@ -18,7 +18,7 @@ import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.RoomPrivateService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/room-private")
 public class RoomPrivateController {

@@ -1,7 +1,7 @@
 import axiosInstance from "../api";
 import { getRoomByUserStart, getRoomByUserSuccess, getRoomByUserError } from "../redux/slices/RoomPrivateSlice";
 
-const API_URL = "http://localhost:8081/api/v1/room-private"
+const API_URL = "https://kcsonline.top/api/v1/room-private"
 export const getRoomByUser = async (id, dispatch) => {
     dispatch(getRoomByUserStart())
     console.log(id);

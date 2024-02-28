@@ -31,7 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.core.io.ByteArrayResource;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/api/v1/file")
 public class ResourcesController {
 

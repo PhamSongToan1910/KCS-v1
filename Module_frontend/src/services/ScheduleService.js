@@ -6,7 +6,7 @@ import {createScheduleError, createScheduleStart, createScheduleSuccess} from ".
 import {deleteScheduleError, deleteScheduleStart, deleteScheduleSuccess} from "../redux/slices/ScheduleSlice"
 import axiosInstance from '../api';
 
-const API_URL = 'http://localhost:8081/api/v1/schedule';
+const API_URL = 'https://kcsonline.top/api/v1/schedule';
 export const fetchSchedule = async (dispatch) => {
   dispatch(getAllScheduleStart())
   try {
